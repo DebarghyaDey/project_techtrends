@@ -3,8 +3,43 @@ import sqlite3
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
 from werkzeug.exceptions import abort
 
+#following two are for logging task
+import logging
+import sys
+
 #global variable which will act as counter for getting the number of active connections
 counter_db_conn = 0
+
+#setting up custom logger
+def custom_logger():
+    # Create the logger and set its default level
+    logger = logging.getLogger('new_log')
+    logger.setLevel(logging.DEBUG)
+
+    # create stdout handler and set level to debug
+    stdout_handler = logging.StreamHandler(stream=sys.stdout)
+    stdout_handler.setLevel(logging.DEBUG)
+
+    # create stderr handler and set level to error
+    stderr_handler = logging.StreamHandler(stream=sys.stderr)
+    stderr_handler.setLevel(logging.ERROR)
+
+    # create formatter
+    formatter = logging.Formatter('%(levelname)s:%(name)s - - [%(asctime)s] %(message)s')
+
+    # add formatters to our handlers
+    stdout_handler.setFormatter(formatter)
+    stderr_handler.setFormatter(formatter)
+
+    # add Handlers to our logger
+    logger.addHandler(stdout_handler)
+    logger.addHandler(stderr_handler)
+
+    # return the logger for future use
+    return logger
+    
+#creating a global variable for using the above logger
+log=custom_logger()
 
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
@@ -50,13 +85,16 @@ def index():
 def post(post_id):
     post = get_post(post_id)
     if post is None:
+      log.error("Article id {} does not exists".format(post_id))
       return render_template('404.html'), 404
     else:
+      log.info("Article title {} retrieved".format(post['title']))
       return render_template('post.html', post=post)
 
 # Define the About Us page
 @app.route('/about')
 def about():
+    log.info("About Us page retrieved")
     return render_template('about.html')
 
 # Define the post creation functionality 
@@ -74,7 +112,7 @@ def create():
                          (title, content))
             connection.commit()
             connection.close()
-
+	    log.info("Article title {} created".format(title))
             return redirect(url_for('index'))
 
     return render_template('create.html')
@@ -82,8 +120,8 @@ def create():
 
 #The following two functions has been designed on the same lines as shown in the course lessons
 #Define the status endpoint
-@app.route('/status')
-def status():
+@app.route('/healthz')
+def healthz():
     response = app.response_class(
             response=json.dumps({"result":"OK - healthy"}),
             status=200,
