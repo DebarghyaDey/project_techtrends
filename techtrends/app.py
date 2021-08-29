@@ -45,9 +45,10 @@ log=custom_logger()
 # This function connects to database with the name `database.db`
 def get_db_connection():
     global counter_db_conn
-    counter_db_conn +=1
+    
     connection = sqlite3.connect('database.db')
     connection.row_factory = sqlite3.Row
+    counter_db_conn +=1
     return connection
 
 # Function to get a post using its ID
@@ -58,18 +59,20 @@ def get_post(post_id):
     connection.close()
     return post
     
-    
+
     
 # Function to get number of posts
 def get_count():
     connection = get_db_connection()
-    count = connection.execute('SELECT COUNT(id) FROM posts').fetchone()
+    posts = connection.execute('SELECT * FROM posts').fetchall()
     connection.close()
-    return count
+    return len(posts)
 
 # Define the Flask application
-app = Flask(__name__)
+app = Flask(__name__)   
 app.config['SECRET_KEY'] = 'your secret key'
+
+
 
 # Define the main route of the web application 
 @app.route('/')
@@ -112,9 +115,9 @@ def create():
                          (title, content))
             connection.commit()
             connection.close()
-            
+            log.info("Article title <{}> created".format(title))
             return redirect(url_for('index'))
-    log.info("Article title <{}> created".format(title))
+    
     return render_template('create.html')
 
 
