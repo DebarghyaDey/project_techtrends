@@ -112,9 +112,9 @@ def create():
                          (title, content))
             connection.commit()
             connection.close()
-	    log.info("Article title {} created".format(title))
+            
             return redirect(url_for('index'))
-
+    log.info("Article title {} created".format(title))
     return render_template('create.html')
 
 
