@@ -11,10 +11,13 @@ COPY . /app
 WORKDIR /app
 
 # run commands to upgrade pip and install dependencies defined in the requirements.txt file and initialise the database with `init_db.py` 
-RUN python -m pip install --upgrade pip && pip install -r requirements.txt && python3 init_db.py
+RUN python -m pip install --upgrade pip && pip install -r requirements.txt 
 
 # exposes the container port
 EXPOSE 3111
 
+#start.sh is the bash file which will execute init_db.py and app.py
+RUN chmod +x ./start.sh
+
 # start the `app.py` application.
-CMD [ "python3", "app.py"  ]
+CMD ["./start.sh"]
