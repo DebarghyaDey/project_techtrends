@@ -1,0 +1,37 @@
+## Docker commands used to build the application 
+#the dockerfile is placed in techtrends directory; and image is tagged as techtrends and named techtrends_image
+docker build -t techtrends_image:techtrends techtrends
+
+
+## Docker commands used to run the application
+docker run -d  -p 7111:3111 techtrends_image:techtrends
+
+
+## Docker commands used to get the application logs
+#9e04d01294f8 is the container id
+docker container logs 9e04d01294f8
+
+
+## Logs from the container running the TechTrends application
+
+172.17.0.1 - - [29/Aug/2021 22:08:59] "GET / HTTP/1.1" 200 -
+172.17.0.1 - - [29/Aug/2021 22:09:07] "GET /metrics HTTP/1.1" 200 -
+172.17.0.1 - - [29/Aug/2021 22:09:25] "GET / HTTP/1.1" 200 -
+172.17.0.1 - - [29/Aug/2021 22:09:34] "GET /create HTTP/1.1" 200 -
+172.17.0.1 - - [29/Aug/2021 22:12:26] "GET / HTTP/1.1" 200 -
+INFO:new_log - - [2021-08-29 22:12:41,873] About Us page retrieved
+172.17.0.1 - - [29/Aug/2021 22:12:41] "GET /about HTTP/1.1" 200 -
+172.17.0.1 - - [29/Aug/2021 22:12:53] "GET /healthz HTTP/1.1" 200 -
+172.17.0.1 - - [29/Aug/2021 22:13:03] "GET /metrics HTTP/1.1" 200 -
+INFO:new_log - - [2021-08-29 22:13:11,859] Article title <2020 CNCF Annual Report> retrieved
+172.17.0.1 - - [29/Aug/2021 22:13:11] "GET /1 HTTP/1.1" 200 -
+ERROR:new_log - - [2021-08-29 22:13:20,636] Article id <13> does not exists
+ERROR:new_log - - [2021-08-29 22:13:20,636] Article id <13> does not exists
+172.17.0.1 - - [29/Aug/2021 22:13:20] "GET /13 HTTP/1.1" 404 -
+172.17.0.1 - - [29/Aug/2021 22:13:25] "GET /create HTTP/1.1" 200 -
+INFO:new_log - - [2021-08-29 22:13:33,327] Article title <new> created
+172.17.0.1 - - [29/Aug/2021 22:13:33] "POST /create HTTP/1.1" 302 -
+172.17.0.1 - - [29/Aug/2021 22:13:33] "GET / HTTP/1.1" 200 -
+
+
+
