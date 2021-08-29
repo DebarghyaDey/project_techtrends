@@ -85,10 +85,10 @@ def index():
 def post(post_id):
     post = get_post(post_id)
     if post is None:
-      log.error("Article id {} does not exists".format(post_id))
+      log.error("Article id <{}> does not exists".format(post_id))
       return render_template('404.html'), 404
     else:
-      log.info("Article title {} retrieved".format(post['title']))
+      log.info("Article title <{}> retrieved".format(post['title']))
       return render_template('post.html', post=post)
 
 # Define the About Us page
@@ -114,7 +114,7 @@ def create():
             connection.close()
             
             return redirect(url_for('index'))
-    log.info("Article title {} created".format(title))
+    log.info("Article title <{}> created".format(title))
     return render_template('create.html')
 
 
