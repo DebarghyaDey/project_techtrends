@@ -19,5 +19,5 @@ EXPOSE 3111
 #start.sh is the bash file which will execute init_db.py and app.py
 RUN chmod +x ./start.sh
 
-# start the `app.py` application.
+# start the `start.sh` file.
 CMD ["./start.sh"]
