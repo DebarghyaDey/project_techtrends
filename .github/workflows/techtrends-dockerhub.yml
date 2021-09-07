@@ -21,7 +21,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       
-      #not using setup buildx or setup qemu as it has not been mentioned in the assignment
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
       
       
       - name: Login to DockerHub
