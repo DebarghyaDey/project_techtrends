@@ -37,4 +37,4 @@ jobs:
           file: ./techtrends/Dockerfile
           
           push: true
-          tags: debarghyadey/techtrends:latest
+          tags: debarghyadey/techtrends:latest  #in the tutorial, it is given repository name, but correct it to username
