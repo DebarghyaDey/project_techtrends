@@ -10,8 +10,8 @@ COPY . /app
 #  defines the working directory within the container
 WORKDIR /app
 
-# run commands to upgrade pip and install dependencies defined in the requirements.txt file and initialise the database with `init_db.py` 
-RUN python -m pip install --upgrade pip && pip install -r requirements.txt 
+# run commands install dependencies defined in the requirements.txt file 
+RUN  pip install -r requirements.txt 
 
 # exposes the container port
 EXPOSE 3111
