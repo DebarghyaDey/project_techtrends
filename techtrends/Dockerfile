@@ -11,7 +11,7 @@ COPY . /app
 WORKDIR /app
 
 # run commands install dependencies defined in the requirements.txt file 
-RUN  pip install -r requirements.txt 
+RUN pip install --upgrade pip && pip install -r requirements.txt 
 
 # exposes the container port
 EXPOSE 3111
