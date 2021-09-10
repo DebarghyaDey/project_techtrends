@@ -1,0 +1,10 @@
+apiVersion: v1
+
+name: techtrends
+description: Python techtrends application
+keywords:
+- techtrends
+version: 1.0.0
+maintainers:
+- name: Debarghya Dey
+- email: work.debarghya2000@gmail.com
